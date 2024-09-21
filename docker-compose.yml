@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    platform: linux/x86_64  # Esto es importante en un Mac M1 para garantizar la compatibilidad con MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_seguro  # Cambia por una contraseña segura
+      MYSQL_DATABASE: herramientasDb  # Nombre de la base de datos que quieres crear
+      MYSQL_USER: usuario_externo  # Usuario externo con permisos
+      MYSQL_PASSWORD: password_seguro  # Contraseña del usuario
+    ports:
+      - "3306:3306"  # Exponer el puerto 3306 para MySQL
+    volumes:
+      - ./mysql_data:/var/lib/mysql  # Volumen persistente para los datos
+    networks:
+      - mysql_network
+
+networks:
+  mysql_network:
+    driver: bridge
